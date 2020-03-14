@@ -1,0 +1,14 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Master template that includes nested templates
+Resources:
+  VPCStack:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      TemplateURL: >-
+        https://s3.amazonaws.com/MyCloudFormationTemplates/Repo_CFN_Templates/VPC_PubPriSubnet_2AZ.yaml
+      TimeoutInMinutes: '5'
+Outputs:
+  VpcId:
+    Value: !GetAtt
+      - VPCStack
+      - Outputs.VPC
