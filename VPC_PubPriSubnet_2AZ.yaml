@@ -180,6 +180,21 @@ Resources:
       GroupName: no-ingress-sg
       GroupDescription: Security group with no ingress rule
       VpcId: !Ref VPC
+  WebAccessSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Enable Web Server Ports 80 and 443 to be accessed from Internet
+      GroupName: internet-web-access
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '443'
+          ToPort: '443'
+          CidrIp: '0.0.0.0/0'
+        - IpProtocol: tcp
+          FromPort: '80'
+          ToPort: '80'
+          CidrIp: '0.0.0.0/0'
 Outputs:
   VPC:
     Description: A reference to the created VPC
@@ -211,3 +226,6 @@ Outputs:
   NoIngressSecurityGroup:
     Description: Security group with no ingress rule
     Value: !Ref NoIngressSecurityGroup
+  WebAccessSecurityGroup:
+    Description: Security group to access web ports from Internet
+    Value: !Ref WebAccessSecurityGroup
